@@ -45,6 +45,26 @@
       "address": "0xCb89E707DdD8A3F452830D564dD5f7FbF6f039F8",
       "txHash": "0xb4ab8dd5a94144297827b6614d5ae15f8b8df4bca3e6d582e4cef024b33cbdda",
       "kind": "transparent"
+    },
+    {
+      "address": "0x19e54acDC8bAd93A47747d88e00f913D37223c8D",
+      "txHash": "0xeba95a0a5f03a2a3f5ae18b4750a5133f12afdccd847f22f40595b108f38fca0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCd66F883ad4e04Da3C8c2b5416F730a99Fbc0989",
+      "txHash": "0xa937ec132d6323647f9f9fb9ad400cc4b577c4adc62d6fb7500ea90406310a40",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x00ef3F5eBcF2306423B4dB60c264831131eE410B",
+      "txHash": "0xf32e4ca4cc0011a2ff3fd76badfbe238f469e95755b1ec133ed174f2e4db02ac",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5DbCB1D4E5bAaaed74dF9156bF2EDD5E9F9D4288",
+      "txHash": "0x4b0440e9f009d874340057659eed6b9c63b8d37471345147a196352a8895cdb7",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -1050,6 +1070,674 @@
               {
                 "label": "physicalAddress",
                 "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "ff419aec8f640decfe71510015f5f1b37a4d30a02dd3dcb5e8d1834c8110740a": {
+      "address": "0x8163a0A44dAF4853DD30C8fa18500DEcA08F60e8",
+      "txHash": "0xac5d0ad54814e11fd3d50c35abca2d092f1f1c7ed47b1bb98443d13727676bd9",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "tokenName",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:15"
+          },
+          {
+            "label": "tokenSymbol",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_string_storage",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:16"
+          },
+          {
+            "label": "tokenDecimals",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint8",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:17"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:18"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_address",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:19"
+          },
+          {
+            "label": "userCount",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:20"
+          },
+          {
+            "label": "contractAddresses",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:21"
+          },
+          {
+            "label": "balances",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:23"
+          },
+          {
+            "label": "allowance",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:24"
+          },
+          {
+            "label": "reversePartecipants",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:25"
+          },
+          {
+            "label": "ptInEthRate",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_uint256",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:36"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "f1614e21e379f5d2356a3e5d7e9f0bf8510329296c7a8960509936eb74c878cf": {
+      "address": "0x7cdfbe476f30046Ed1F5c1aDedea4646636af4bD",
+      "txHash": "0x871de7beb177f6598b8ac0f0104a2c891f4b6916c61fe44f1d776bf6b0e47310",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "citizens",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_struct(Citizen)4259_storage)",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:22"
+          },
+          {
+            "label": "pt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(IPollutionToken)6254",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:24"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_address",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:25"
+          },
+          {
+            "label": "dsesCenter",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_contract(IDSESCenter)6178",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:26"
+          },
+          {
+            "label": "pnft",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IPollutionNft)6202",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDSESCenter)6178": {
+            "label": "contract IDSESCenter",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionNft)6202": {
+            "label": "contract IPollutionNft",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionToken)6254": {
+            "label": "contract IPollutionToken",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Citizen)4259_storage)": {
+            "label": "mapping(address => struct classes.Citizen)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Citizen)4259_storage": {
+            "label": "struct classes.Citizen",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "checkedTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "surname",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "email",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "dateOfBirth",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "telephone",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "physicalAddress",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "6fc375e1893214e78920bd5b0c55966783291378b65ef5870253cfc962f62fe0": {
+      "address": "0xcf033FcDFbF65804FBDC4Dd07FC78Ba8B72fD82c",
+      "txHash": "0xdca125566778df086cc6afc9a118f23be0ab9089d59f5d369aa251461f2d0ed0",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "admin",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "DSESCenter",
+            "src": "contracts/DSESCenter.sol:15"
+          },
+          {
+            "label": "pt",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IPollutionToken)1024",
+            "contract": "DSESCenter",
+            "src": "contracts/DSESCenter.sol:16"
+          },
+          {
+            "label": "states",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_struct(State)517_storage)",
+            "contract": "DSESCenter",
+            "src": "contracts/DSESCenter.sol:20"
+          },
+          {
+            "label": "cities",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_struct(City)534_storage)",
+            "contract": "DSESCenter",
+            "src": "contracts/DSESCenter.sol:21"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IPollutionToken)1024": {
+            "label": "contract IPollutionToken",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(City)534_storage)": {
+            "label": "mapping(address => struct classes.City)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(State)517_storage)": {
+            "label": "mapping(address => struct classes.State)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(City)534_storage": {
+            "label": "struct classes.City",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "population",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "numberOfIndustries",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "attorneyName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "attorneySurname",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "attorneyEmail",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "telephone",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "physicalAddress",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(State)517_storage": {
+            "label": "struct classes.State",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "iso",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "numberOfCities",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "attorneyName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "attorneySurname",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "attorneyEmail",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "telephone",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "physicalAddress",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "060f203581030458f2b60f62767b57ea485e31d153da12dc19eee57b138abc7a": {
+      "address": "0x10F8edc8FB657EeFFe7aa876fC498CcC1dA66e63",
+      "txHash": "0x54e676044111afe5678ac619a951a234e70e5868ddd67be0a18cb65ab428d2d8",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "citizens",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_struct(Citizen)1022_storage)",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:22"
+          },
+          {
+            "label": "pt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(IPollutionToken)1134",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:24"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_address",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:25"
+          },
+          {
+            "label": "dsesCenter",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_contract(IDSESCenter)1058",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:26"
+          },
+          {
+            "label": "pnft",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IPollutionNft)1082",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDSESCenter)1058": {
+            "label": "contract IDSESCenter",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionNft)1082": {
+            "label": "contract IPollutionNft",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionToken)1134": {
+            "label": "contract IPollutionToken",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Citizen)1022_storage)": {
+            "label": "mapping(address => struct classes.Citizen)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Citizen)1022_storage": {
+            "label": "struct classes.Citizen",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "checkedTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "surname",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "email",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "dateOfBirth",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "telephone",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "physicalAddress",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256",
                 "offset": 0,
                 "slot": "7"
               }

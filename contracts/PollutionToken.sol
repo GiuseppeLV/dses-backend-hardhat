@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.7;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import {conversionMethods} from "./Library.sol";
 error PollutionToken__Only_Allowed_Contracts();
 error PollutionToken__Not_Enough_PT();
+error Not_Your_Entity();
 
 /// @title ERC-20 Contract for Pollution Tokens
 /// @author Giuseppe La Vecchia
@@ -238,8 +238,16 @@ contract PollutionToken is Initializable {
         return true;
     }
 
-    function getPreviousSender(address from) public view returns (address) {
-        return reversePartecipants[from];
+    /**
+     * Set allowance for other address
+     *
+     * Allows `_spender` to spend no more than `_value` tokens on your behalf
+     *
+     *
+     * @param receiver the address of the one who received tokens in transferForAddingEntities function
+     */
+    function getPreviousSender(address receiver) public view returns (address) {
+        return reversePartecipants[receiver];
     }
 
     /**
@@ -326,13 +334,6 @@ contract PollutionToken is Initializable {
         return true;
     }
 
-    modifier onlyAllowedContracts() {
-        if (contractAddresses[msg.sender] != admin) {
-            revert PollutionToken__Only_Allowed_Contracts();
-        }
-        _;
-    }
-
     function getPTtoEthRate() public view returns (uint256) {
         return ptInEthRate;
     }
@@ -340,6 +341,14 @@ contract PollutionToken is Initializable {
     function setPTtoEthRate(uint256 newRate) public onlyAllowedContracts {
         ptInEthRate = newRate;
     }
+
+    modifier onlyAllowedContracts() {
+        if (contractAddresses[msg.sender] != admin) {
+            revert PollutionToken__Only_Allowed_Contracts();
+        }
+        _;
+    }
+
     /*
     function getPTValueInCurrency(
         uint256 ptAmount,

@@ -165,10 +165,10 @@ contract CityCitizen is Initializable {
         uint256 balanceOfCitizen,
         address previousSender
     ) private {
-        /* if (
+        if (
             (block.timestamp - citizens[msg.sender].checkedTimestamp) >= //check if 30 days has passed.
             methods.dayTimestamp(30)
-        )*/ {
+        ) {
             //uint256 balanceOfCitizen = pt.balanceOf(msg.sender);
             checkForNft(balanceOfCitizen);
             pt.transferExtended(
@@ -187,6 +187,21 @@ contract CityCitizen is Initializable {
             revert CityCitizen__Citizen_Not_Found();
         }
         return citizens[citizenAddr];
+    }
+
+    /**
+     *
+     * @notice This will return true if citizen was added by a city, otherwise false. getPreviousSender contains a mapping(addressOfEntityChildren=>addressOfEntityFather) where father is the entity that add the children, like city add citizen.
+     *
+     * @param citizenAddr address of that citizen to check
+     */
+    function checkExistingCitizenOfACity(
+        address citizenAddr
+    ) public view returns (bool) {
+        if (pt.getPreviousSender(citizenAddr) == msg.sender) {
+            return true;
+        }
+        return false;
     }
 
     function checkForNft(uint256 balanceOfCitizen) public {
@@ -208,33 +223,37 @@ contract CityCitizen is Initializable {
         }
     }
 
-    function getPreviousSender() public view returns (address) {
-        return pt.getPreviousSender(msg.sender);
-    }
-
     function checkExistingCitizen(
         address citizenAddr
     ) public view returns (bool) {
         return bytes(citizens[citizenAddr].name).length > 0;
     }
 
-    function deleteCitizen(address citizenAddr) public onlyCity {
+    function deleteCitizen(
+        address citizenAddr
+    ) public onlyBelongingCity(citizenAddr) {
         pt.transferExtended(citizenAddr, msg.sender, pt.balanceOf(citizenAddr));
         delete citizens[citizenAddr];
     }
 
-    modifier onlyCity() {
-        require(
-            dsesCenter.checkExistingCity(msg.sender),
-            "You are not allowed to do that. You are not a city"
-        );
-        _;
-    }
     modifier onlyAdmin() {
         require(
             (msg.sender == admin),
             "You are not the owner of this contract"
         );
+        _;
+    }
+
+    /**
+     *
+     * @notice if City (the msg.sender) isn't the same that added that specific citizen with citizenAddr, revert the transaction
+     *
+     * @param citizenAddr address of that citizen that you want to check
+     */
+    modifier onlyBelongingCity(address citizenAddr) {
+        if (pt.getPreviousSender(citizenAddr) != msg.sender) {
+            revert CityCitizen__Citizen_Not_Found();
+        }
         _;
     }
 }

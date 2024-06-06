@@ -16,7 +16,7 @@ const waitBlockConfirmations = developmentChains.includes(network.name)
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log, save } = deployments
   const { deployer } = await getNamedAccounts()
-  const INITIAL_SUPPLY = 10000000;
+  const INITIAL_SUPPLY = 900000000;
   console.log("deployer:",deployer)
   const chainId = network.config.chainId
   console.log("chainiddeploy:",chainId)

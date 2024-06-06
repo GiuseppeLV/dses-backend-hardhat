@@ -19,8 +19,8 @@ contract DSESCenter is Initializable {
 
     mapping(address => classes.State) private states; //for login purposes
     mapping(address => classes.City) private cities;
+    address[] private citiesArray;
 
-    error DSESCenter__Only_State_Allowed();
     error DSESCenter__Only_Admin_Allowed();
     error DSESCenter__State_Not_Found();
     error DSESCenter__City_Not_Found();
@@ -192,13 +192,11 @@ contract DSESCenter is Initializable {
         return bytes(cities[cityAddr].name).length > 0; //mapping are initialized as 0.
     }
 
-    function deleteCity(address cityAddr) external onlyState {
-        if (checkExistingCity(cityAddr)) {
-            pt.transferExtended(cityAddr, msg.sender, pt.balanceOf(cityAddr));
-            delete cities[cityAddr];
-        } else {
-            revert DSESCenter__City_Not_Found();
-        }
+    function deleteCity(
+        address cityAddr
+    ) external onlyBelongingState(cityAddr) {
+        pt.transferExtended(cityAddr, msg.sender, pt.balanceOf(cityAddr));
+        delete cities[cityAddr];
     }
 
     function getCity(
@@ -207,16 +205,36 @@ contract DSESCenter is Initializable {
         return cities[cityAddr];
     }
 
+    /**
+     *
+     * @notice This will return true if city was added by a state, otherwise false. getPreviousSender contains a mapping(addressOfEntityChildren=>addressOfEntityFather) where father is the entity that add the children, like state add city.
+     *
+     * @param cityAddr address of that city to check
+     */
+    function checkExistingCityOfAState(
+        address cityAddr
+    ) public view returns (bool) {
+        if (pt.getPreviousSender(cityAddr) == msg.sender) {
+            return true;
+        }
+        return false;
+    }
+
     modifier onlyAdmin() {
         if ((msg.sender != admin)) {
             revert DSESCenter__Only_Admin_Allowed();
         }
         _;
     }
-
-    modifier onlyState() {
-        if ((!checkExistingState(msg.sender))) {
-            revert DSESCenter__Only_State_Allowed();
+    /**
+     *
+     * @notice if State (the msg.sender) isn't the same that added that specific city with cityAddr, revert the transaction
+     *
+     * @param cityAddr address of that city that you want to check
+     */
+    modifier onlyBelongingState(address cityAddr) {
+        if (pt.getPreviousSender(cityAddr) != msg.sender) {
+            revert DSESCenter__City_Not_Found();
         }
         _;
     }
