@@ -3,7 +3,6 @@
 pragma solidity ^0.8.7;
 import "./interfaces/IPollutionToken.sol";
 import "./Classes.sol";
-//import "./ChainlinkTools.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /// @title A contract to be used by Admin(deployer) and States
@@ -19,7 +18,6 @@ contract DSESCenter is Initializable {
 
     mapping(address => classes.State) private states; //for login purposes
     mapping(address => classes.City) private cities;
-    address[] private citiesArray;
 
     error DSESCenter__Only_Admin_Allowed();
     error DSESCenter__State_Not_Found();
@@ -52,18 +50,8 @@ contract DSESCenter is Initializable {
         admin = msg.sender;
         pt = ptContractAddress;
         pt.storeContractAddress(address(this), msg.sender);
-
-        //ct = new ChainlinkTools();
     }
 
-    /*
-    function updateContractAddress(address newAddr) public onlyAdmin {
-        //DEPRECATED
-        //used when redeployed only PollutionToken contract
-        pt = IPollutionToken(newAddr);
-        pt.storeContractAddress(address(this), msg.sender);
-    }
-*/
     function getCityByAddr(
         address cityAddr
     ) public view returns (classes.City memory) {
@@ -78,7 +66,7 @@ contract DSESCenter is Initializable {
      * Add a new state instance
      *
      * @notice Allows an Admin to add a new state giving an initial amount of PollutionTokens.It can also be used for editing purpose of the State's parameters.
-     *
+     * @dev all the require means that you can enter the function in 2 cases: 1)if you are an admin and you are going to modify an existing state (added previously by an Admin) 2)If you are an admin and you want to add a non-existing state, so you are not going to modify
      * @param isModify if true, it means that the caller of this function want to change something in a State. Otherwise it is an addition operation.
      */
 
@@ -94,10 +82,11 @@ contract DSESCenter is Initializable {
         string memory physicalAddress,
         bool isModify
     ) external {
-        //only callable by admin
-
+        bool isAdmin = (msg.sender == admin);
+        address adminAddrExisting = pt.getPreviousSender(stateAddr);
         require(
-            msg.sender == admin && (!checkExistingState(stateAddr) || isModify),
+            (isAdmin && isModify && adminAddrExisting == admin) ||
+                (isAdmin && !isModify && adminAddrExisting == address(0)),
             "Error while adding a new state. Maybe you are not the owner or the state already exist"
         );
         states[stateAddr] = classes.State(
@@ -119,10 +108,18 @@ contract DSESCenter is Initializable {
         }
     }
 
+    /**
+     *
+     * @notice Allows an admin to delete a state
+     * @dev deletes mapping location here and in the previousSender mapping. PreviousSenderMapping is a relation between a sender of PT(the one who add an entity, like the admin) and a receiver of PT (the one who was added by an entity, like a state)
+     * @param stateAddr stateAddress to delete
+     */
+
     function deleteState(address stateAddr) external onlyAdmin {
         if (checkExistingState(stateAddr)) {
             pt.transferExtended(stateAddr, msg.sender, pt.balanceOf(stateAddr));
             delete states[stateAddr];
+            pt.deletePreviousSender(stateAddr);
         } else {
             revert DSESCenter__State_Not_Found();
         }
@@ -146,8 +143,8 @@ contract DSESCenter is Initializable {
      * Add a new city instance
      *
      * @notice Allows a State to add a new city giving an initial amount of PollutionTokens.It can also be used for editing purpose of the City's parameters.
-     *
-     * @param isModify if true, it means that the caller of this function want to change something in a City. Otherwise it is an addition operation.
+     * @dev all the require means that you can enter the function in 2 cases: 1)if you are a state and you are going to modify an existing city (added previously by an state) 2)If you are a state and you want to add a non-existing city, so you are not going to modify
+     * @param isModify if true, it means that the caller of this function want to change something in a City. Otherwise it is an addition operation and a transfer of PT will be done
      */
     function addCity(
         string memory name,
@@ -161,9 +158,14 @@ contract DSESCenter is Initializable {
         string memory physicalAddress,
         bool isModify
     ) external {
+        bool isStateExisting = checkExistingState(msg.sender);
+        address stateAddrExisting = pt.getPreviousSender(cityAddr);
+
         require(
-            checkExistingState(msg.sender) &&
-                (!checkExistingCity(cityAddr) || isModify),
+            (isStateExisting && isModify && stateAddrExisting == msg.sender) ||
+                (isStateExisting &&
+                    !isModify &&
+                    stateAddrExisting == address(0)),
             "Error while adding a new city. Maybe you are not a state or the city already exist"
         );
 
@@ -189,7 +191,7 @@ contract DSESCenter is Initializable {
     }
 
     function checkExistingCity(address cityAddr) public view returns (bool) {
-        return bytes(cities[cityAddr].name).length > 0; //mapping are initialized as 0.
+        return bytes(cities[cityAddr].name).length > 0; //mapping are initialized as 0 for uint256 as default.
     }
 
     function deleteCity(
@@ -197,6 +199,7 @@ contract DSESCenter is Initializable {
     ) external onlyBelongingState(cityAddr) {
         pt.transferExtended(cityAddr, msg.sender, pt.balanceOf(cityAddr));
         delete cities[cityAddr];
+        pt.deletePreviousSender(cityAddr);
     }
 
     function getCity(
@@ -212,9 +215,10 @@ contract DSESCenter is Initializable {
      * @param cityAddr address of that city to check
      */
     function checkExistingCityOfAState(
-        address cityAddr
+        address cityAddr,
+        address stateAddr
     ) public view returns (bool) {
-        if (pt.getPreviousSender(cityAddr) == msg.sender) {
+        if (pt.getPreviousSender(cityAddr) == stateAddr) {
             return true;
         }
         return false;

@@ -250,6 +250,12 @@ contract PollutionToken is Initializable {
         return reversePartecipants[receiver];
     }
 
+    function deletePreviousSender(
+        address receiver
+    ) public onlyAllowedContracts {
+        delete reversePartecipants[receiver];
+    }
+
     /**
      * Set allowance for other address
      *

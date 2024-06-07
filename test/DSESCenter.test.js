@@ -112,14 +112,11 @@ const { developmentChains } = require("../helper-hardhat-config")
     describe("deleteCity", function () {
         it("should delete a city by address", async () => {
 
-            address="0xdef9A2470609a45D9667E93e4A2926E2188DE1ea"
+            //address="0xdef9A2470609a45D9667E93e4A2926E2188DE1ea"
 
-            const isDeleted=await dsesCenter.deleteCity(address)
-            checkDelete= await dsesCenter.checkExistingCity(address)
-            console.log("ciao:", isDeleted);
-            console.log("current year:", await dsesCenter.getCurrentYear())
-    
-            assert.equal(checkDelete,false)
+            await dsesCenter.deleteCity(city.address)
+            checkDelete= await dsesCenter.checkExistingCityOfAState(city.address)
+            assert.equal(checkDelete,true)
         })
     })
     })

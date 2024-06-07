@@ -7,6 +7,8 @@ interface IPollutionToken {
 
     function getPreviousSender(address from) external view returns (address);
 
+    function deletePreviousSender(address receiver) external;
+
     function storeContractAddress(
         address contractAddr,
         address sender

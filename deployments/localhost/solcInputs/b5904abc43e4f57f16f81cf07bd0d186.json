@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/interfaces/IPollutionToken.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.7;\n\ninterface IPollutionToken {\n    function transferExtended(address from, address to, uint256 value) external;\n\n    function getPreviousSender(address from) external view returns (address);\n\n    function deletePreviousSender(address receiver) external;\n\n    function storeContractAddress(\n        address contractAddr,\n        address sender\n    ) external;\n\n    function balanceOf(address _owner) external view returns (uint256 balance);\n\n    function transferForAddingEntities(\n        address from,\n        address to,\n        uint256 value\n    ) external;\n\n    function getUserCount() external view returns (uint256);\n\n    function getPTtoEthRate() external view returns (uint256);\n}\n"
+    },
+    "contracts/TradeToken.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.7;\nimport \"./interfaces/IPollutionToken.sol\";\nerror Trade__Only_Receiver_Allowed();\nerror Trade__Need_Receiver_Differ_From_Sender();\n\n/// @title Contract for trading PollutionTokens for ETH\n/// @author Giuseppe La Vecchia\n/// @notice It can be possible to start a new trade by a sender, accept or refuse it by a receiver.\n/// @custom:experimental This is an experimental contract.\ncontract TradeToken {\n    struct TradeData {\n        address sender;\n        address receiver;\n        uint256 ptAmount;\n        uint256 id;\n    }\n\n    mapping(address => TradeData[]) private receiverTrades;\n    IPollutionToken private immutable tokenAddress;\n    uint256 private id = 1; //used for trades instance identification\n    event TradeCompleted(uint256 indexed id, bool hasSucceded);\n\n    constructor(IPollutionToken _tokenAddress) {\n        tokenAddress = IPollutionToken(_tokenAddress);\n        tokenAddress.storeContractAddress(address(this), msg.sender);\n    }\n\n    /**\n     * Begin a PollutionToken trade\n     *\n     * Allows 'sender' to start a trade of 'ptAmount' of tokens with the 'receiver'\n     *\n     * @param ptAmount amount of PollutionToken that you want to trade\n     * @param receiver the receiver address\n     */\n\n    function startTrade(uint256 ptAmount, address receiver) public {\n        require(\n            tokenAddress.balanceOf(msg.sender) >= ptAmount,\n            \"Not enough tokens\"\n        );\n        if (msg.sender == receiver) {\n            revert Trade__Need_Receiver_Differ_From_Sender();\n        }\n        TradeData memory tdInstance = TradeData(\n            msg.sender,\n            receiver,\n            ptAmount,\n            id\n        );\n        id = id + 1;\n        receiverTrades[receiver].push(tdInstance);\n    }\n\n    /**\n     * Returning instances of all the trades of the 'receiver'\n     *\n     * @param receiver the receiver address\n     */\n\n    function returnTrades(\n        address receiver\n    ) public view returns (TradeData[] memory) {\n        TradeData[] memory _receiverTrades = receiverTrades[receiver];\n        return _receiverTrades;\n    }\n\n    function getTradeById(\n        uint256 _id,\n        address receiver\n    ) public view returns (TradeData memory) {\n        TradeData memory tdInstance;\n        for (uint256 i = 0; i < receiverTrades[receiver].length; i++) {\n            if (receiverTrades[receiver][i].id == _id) {\n                tdInstance = receiverTrades[receiver][i];\n                break;\n            }\n        }\n        return tdInstance;\n    }\n\n    /**\n     * Ending the trade instance\n     *\n     * This follow the startTrade execution. When a startTrade is called by a sender, the receiver must respond to the request, accepting and paying in ETH that ptAmount.\n     * or refusing, simply emitting an event. In both cases the trade instance will be removed from the trade list.\n     *\n     * @param _id the trade identificator\n     * @param receiver the receiver address\n     * @param isSucceded true if 'receiver' accept the trade, false if he refuse\n     * @dev a new require is added at before the transfer and payment because the sender can finish his tokens while waiting for receiver decision\n     *\n     */\n    function endTrade(\n        uint256 _id,\n        address receiver,\n        bool isSucceded\n    ) public payable {\n        if ((receiver != msg.sender)) {\n            revert Trade__Only_Receiver_Allowed();\n        }\n\n        TradeData[] memory _receiverTrades = receiverTrades[receiver];\n        TradeData memory tdInstance;\n        //uint256 ethCost = tdInstance.ptAmount * tokenAddress.getPTtoEthRate();\n        for (uint256 i = 0; i < _receiverTrades.length; i++) {\n            if (_receiverTrades[i].id == _id) {\n                tdInstance = _receiverTrades[i];\n                removeIndex(i, receiver);\n                break;\n            }\n        }\n\n        if (isSucceded) {\n            require(\n                tokenAddress.balanceOf(tdInstance.sender) >=\n                    tdInstance.ptAmount,\n                \"Sender hasn't got enough tokens\"\n            );\n            //if accepted\n            (bool sent, ) = payable(tdInstance.sender).call{value: msg.value}(\n                \"\"\n            );\n            require(sent, \"Failed to send Ether\");\n\n            tokenAddress.transferExtended(\n                tdInstance.sender,\n                receiver,\n                tdInstance.ptAmount * 10 ** 18\n            );\n\n            emit TradeCompleted(tdInstance.id, true);\n        } else {\n            emit TradeCompleted(tdInstance.id, false);\n        }\n    }\n\n    /**\n     * Removing a specific index from a list\n     *\n     * For a better and safer delete without using the 'delete' keyword, the last element of the array replace the one in the 'index' position of the array.\n     * Then the pop function is called, deleting the trade instance in the previous 'index' position.\n     *\n     * @param index the index of the array of trades of the trade instance that we want to delete\n     * @param receiver the receiver address\n     *\n     */\n    function removeIndex(uint256 index, address receiver) private {\n        receiverTrades[receiver][index] = receiverTrades[receiver][\n            receiverTrades[receiver].length - 1\n        ];\n        receiverTrades[receiver].pop();\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "evmVersion": "paris",
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

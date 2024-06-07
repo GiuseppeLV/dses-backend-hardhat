@@ -90,6 +90,7 @@ contract TradeToken {
      * @param _id the trade identificator
      * @param receiver the receiver address
      * @param isSucceded true if 'receiver' accept the trade, false if he refuse
+     * @dev a new require is added at before the transfer and payment because the sender can finish his tokens while waiting for receiver decision
      *
      */
     function endTrade(
@@ -111,7 +112,13 @@ contract TradeToken {
                 break;
             }
         }
+
         if (isSucceded) {
+            require(
+                tokenAddress.balanceOf(tdInstance.sender) >=
+                    tdInstance.ptAmount,
+                "Sender hasn't got enough tokens"
+            );
             //if accepted
             (bool sent, ) = payable(tdInstance.sender).call{value: msg.value}(
                 ""

@@ -61,6 +61,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     
   }
   else{
+    console.log("Reproxying citycitizen...");
     const contract = await ethers.getContractFactory("CityCitizen");
     const contractInstance = await ethers.getContract("CityCitizen");
 
@@ -71,7 +72,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   
     await dep.waitForDeployment();
     await saveDeploy(dep,save,'CityCitizen');
-
+    log(`contract deployed at ${contract.address}`)
 
   }
 

@@ -57,13 +57,6 @@ contract CityCitizen is Initializable {
         pt.storeContractAddress(address(this), msg.sender);
     }
 
-    /*
-    function updateContractAddress(address newAddr) public onlyAdmin {
-        //used when redeployed only PollutionToken contract
-        pt = IPollutionToken(newAddr);
-        pt.storeContractAddress(address(this), msg.sender);
-    }
-*/
     function getAdminAddress() public view returns (address) {
         return admin;
     }
@@ -72,9 +65,9 @@ contract CityCitizen is Initializable {
      * Add a new citizen instance
      *
      * @notice Allows a City to add a new citizen giving an initial amount of PollutionTokens. It can also be used for editing purpose of the Citizen's parameters.
-     *
+     * @dev all the require means that you can enter the function in 2 cases: 1)if you are a city and you are going to modify an existing citizen (added previously by the city) 2)If you are a city and you want to add a non-existing citizen, so you are not going to modify
      * @param isModify if true, it means that the caller of this function want to change something in a Citizen. Otherwise it is an addition operation.
-     * @dev if it is not a modify action, the getUserCount is called. In the other case, the citizen with an already id is provider (in id = getCitizen(citizenAddr).id; code line)
+     * @dev if it is not a modify action, the getUserCount is called. In the other case, the citizen with an already id is provided (in id = getCitizen(citizenAddr).id; code line)
      */
     function addCitizen(
         string memory name,
@@ -87,9 +80,11 @@ contract CityCitizen is Initializable {
         string memory physicalAddress,
         bool isModify
     ) public {
+        bool isCityExisting = dsesCenter.checkExistingCity(msg.sender);
+        address cityAddrExisting = pt.getPreviousSender(citizenAddr);
         require(
-            dsesCenter.checkExistingCity(msg.sender) &&
-                (!checkExistingCitizen(citizenAddr) || isModify),
+            (isCityExisting && isModify && cityAddrExisting == msg.sender) ||
+                (isCityExisting && !isModify && cityAddrExisting == address(0)),
             "You are not a city or citizen already exist"
         );
         uint256 id;
@@ -196,9 +191,10 @@ contract CityCitizen is Initializable {
      * @param citizenAddr address of that citizen to check
      */
     function checkExistingCitizenOfACity(
-        address citizenAddr
+        address citizenAddr,
+        address cityAddr
     ) public view returns (bool) {
-        if (pt.getPreviousSender(citizenAddr) == msg.sender) {
+        if (pt.getPreviousSender(citizenAddr) == cityAddr) {
             return true;
         }
         return false;
@@ -234,6 +230,7 @@ contract CityCitizen is Initializable {
     ) public onlyBelongingCity(citizenAddr) {
         pt.transferExtended(citizenAddr, msg.sender, pt.balanceOf(citizenAddr));
         delete citizens[citizenAddr];
+        pt.deletePreviousSender(citizenAddr);
     }
 
     modifier onlyAdmin() {
