@@ -32,8 +32,8 @@ Or you can deploy contracts to some networks, in this project it is used Sepolia
 yarn hardhat deploy --network sepolia
 ```
 
-That line of code will run all scripts into the ```bash deploy``` folder. If you want to run only one of these script,
-you can use the  ```bash --tags``` option. For example, to run only the 03-deploy-DSESCenter, you can use:
+That line of code will run all scripts into the ```deploy``` folder. If you want to run only one of these script,
+you can use the  ```--tags``` option. For example, to run only the 03-deploy-DSESCenter, you can use:
 
 ```bash
 yarn hardhat deploy --tags dsesCenter --network localhost
