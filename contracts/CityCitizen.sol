@@ -27,6 +27,7 @@ contract CityCitizen is Initializable {
     IPollutionNft private pnft;
     event NoTokenCitizen(address indexed citizenAddr, uint256 timestamp);
     error CityCitizen__Citizen_Not_Found();
+    bool private locked;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -67,7 +68,7 @@ contract CityCitizen is Initializable {
      * @notice Allows a City to add a new citizen giving an initial amount of PollutionTokens. It can also be used for editing purpose of the Citizen's parameters.
      * @dev all the require means that you can enter the function in 2 cases: 1)if you are a city and you are going to modify an existing citizen (added previously by the city) 2)If you are a city and you want to add a non-existing citizen, so you are not going to modify
      * @param isModify if true, it means that the caller of this function want to change something in a Citizen. Otherwise it is an addition operation.
-     * @dev if it is not a modify action, the getUserCount is called. In the other case, the citizen with an already id is provided (in id = getCitizen(citizenAddr).id; code line)
+     *
      */
     function addCitizen(
         string memory name,
@@ -78,6 +79,7 @@ contract CityCitizen is Initializable {
         string memory dateOfBirth,
         uint256 telephone,
         string memory physicalAddress,
+        string memory id,
         bool isModify
     ) public {
         bool isCityExisting = dsesCenter.checkExistingCity(msg.sender);
@@ -87,7 +89,7 @@ contract CityCitizen is Initializable {
                 (isCityExisting && !isModify && cityAddrExisting == address(0)),
             "You are not a city or citizen already exist"
         );
-        uint256 id;
+        //uint256 id;
         //uint256 tokensAssigned = tokenToBeAssigned(); //this is omitted for semplicity and testing and it is used a constant value
         //uint256 tokensAssigned = 30 * multiplier;
         if (!isModify) {
@@ -96,10 +98,10 @@ contract CityCitizen is Initializable {
                 citizenAddr,
                 tokenToBeAssigned()
             );
-            id = pt.getUserCount();
-        } else {
+            //id = pt.getUserCount();
+        } /*else {
             id = getCitizen(citizenAddr).id;
-        }
+        }*/
         citizens[citizenAddr] = classes.Citizen(
             name,
             checkedTimestamp,

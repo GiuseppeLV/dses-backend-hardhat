@@ -18,7 +18,7 @@ contract PollutionToken is Initializable {
     uint8 private tokenDecimals;
     uint256 public _totalSupply;
     address private admin;
-    uint256 private userCount; //number of DSES users
+    //uint256 private userCount; //number of DSES users
     mapping(address => address) contractAddresses; //used to store contract addresses allowed by admin that interact with this contract
 
     mapping(address => uint256) public balances;
@@ -192,7 +192,7 @@ contract PollutionToken is Initializable {
      * @param to The address of the recipient
      * @param value the amount to send
      * @param from the address of the sender. This is added to allow this contract to forward transactions from other contracts, like from DSESCenter.sol or CityCitizen.sol
-     * @notice userCount is used to count how many entities get registered to the system. It is used also for Citizens to generate a wallet for them with BIP44. ReversePartecipants is used to map the added entity (like Citizen) with the adding entity (like City) for rollback purpose, like giving back tokens to the "from" entity from the "to" entity.
+     * @notice ReversePartecipants is used to map the added entity (like Citizen) with the adding entity (like City) for rollback purpose, like giving back tokens to the "from" entity from the "to" entity.
      */
 
     function transferForAddingEntities(
@@ -204,14 +204,15 @@ contract PollutionToken is Initializable {
             revert PollutionToken__Not_Enough_PT();
         }
         reversePartecipants[to] = from;
-        userCount = userCount + 1;
+        //userCount = userCount + 1;
         transferExtended(from, to, value);
     }
 
+    /*
     function getUserCount() public view returns (uint256) {
         return userCount;
     }
-
+*/
     /**
      * Transfer tokens from other address
      *

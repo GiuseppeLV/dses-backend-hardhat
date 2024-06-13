@@ -33,7 +33,7 @@ library classes {
         string dateOfBirth;
         uint256 telephone;
         string physicalAddress;
-        uint256 id; //used for bip44 wallet
+        string id; //used for bip44 wallet
     } /*
     struct Industry {
         string name;

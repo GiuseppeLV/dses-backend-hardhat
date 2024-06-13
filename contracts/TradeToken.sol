@@ -116,8 +116,10 @@ contract TradeToken {
         if (isSucceded) {
             require(
                 tokenAddress.balanceOf(tdInstance.sender) >=
-                    tdInstance.ptAmount,
-                "Sender hasn't got enough tokens"
+                    tdInstance.ptAmount &&
+                    msg.value ==
+                    tdInstance.ptAmount * tokenAddress.getPTtoEthRate(),
+                "Sender hasn't got enough tokens or eth are not enough"
             );
             //if accepted
             (bool sent, ) = payable(tdInstance.sender).call{value: msg.value}(

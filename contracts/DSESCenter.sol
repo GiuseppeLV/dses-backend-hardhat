@@ -160,7 +160,6 @@ contract DSESCenter is Initializable {
     ) external {
         bool isStateExisting = checkExistingState(msg.sender);
         address stateAddrExisting = pt.getPreviousSender(cityAddr);
-
         require(
             (isStateExisting && isModify && stateAddrExisting == msg.sender) ||
                 (isStateExisting &&
@@ -168,7 +167,6 @@ contract DSESCenter is Initializable {
                     stateAddrExisting == address(0)),
             "Error while adding a new city. Maybe you are not a state or the city already exist"
         );
-
         cities[cityAddr] = classes.City(
             name,
             population,
@@ -179,16 +177,17 @@ contract DSESCenter is Initializable {
             telephone,
             physicalAddress
         );
-        /*
-        uint256 tokenAssigned = (
-            (pt.balanceOf(msg.sender) / states[msg.sender].numberOfCities)
-        ) * multiplier; //#(tokenState/numberOfCitiesState)/cityPopulation
-        */
         if (!isModify) {
             uint256 tokenAssigned = 10000 * multiplier;
             pt.transferForAddingEntities(msg.sender, cityAddr, tokenAssigned);
         }
     }
+
+    /*
+        uint256 tokenAssigned = (
+            (pt.balanceOf(msg.sender) / states[msg.sender].numberOfCities)
+        ) * multiplier; //#(tokenState/numberOfCitiesState)/cityPopulation
+        */
 
     function checkExistingCity(address cityAddr) public view returns (bool) {
         return bytes(cities[cityAddr].name).length > 0; //mapping are initialized as 0 for uint256 as default.
