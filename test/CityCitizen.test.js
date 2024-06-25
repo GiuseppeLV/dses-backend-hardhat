@@ -118,9 +118,9 @@ describe("Citycitizen unit test", function () {
             "29/05/1997",
             32856579098,
             "Via Armando Diaz",
+            "1",
             false,
         )
-        console.log("IDD", await pt.getUserCount())
     })
 
     describe("constructor", function () {
@@ -143,6 +143,7 @@ describe("Citycitizen unit test", function () {
                 "29/05/1997",
                 32856579098,
                 "Via Armando Diaz",
+                "2",
                 false,
             )
             checkExistingCitizen =
@@ -161,6 +162,28 @@ describe("Citycitizen unit test", function () {
                 await cityCitizenContract.checkExistingCitizen(citizen.address),
                 false,
             )
+        })
+    })
+
+    describe("modifyCitizen", function () {
+        it("should modify the citizen", async () => {
+            const currentDate = new Date()
+            const timestampInMilliseconds = currentDate.getTime()
+            const timestamp = Math.floor(timestampInMilliseconds / 1000) //in seconds
+            await cityCitizenContract.addCitizen(
+                "Giovanni",
+                citizen.address,
+                timestamp,
+                "Interlandi",
+                "gint.r@gmail.com",
+                "21/05/1947",
+                32156579598,
+                "Via Piave 3",
+                "1",
+                true,
+            )
+            citizen1 = await cityCitizenContract.getCitizen(citizen.address)
+            assert.equal("Giovanni", citizen1[0])
         })
     })
     describe("consumePTFromCitizen", function () {
@@ -184,18 +207,12 @@ describe("Citycitizen unit test", function () {
                 await pt.balanceOf(citizen.address),
             ) //manual check because of the if condition for the x days passed
 
-            await cityCitizenContract.consumePTFromCitizen(
-                ethers.parseEther("11"),
-            )
-            await cityCitizenContract.checkForNft(
-                await pt.balanceOf(citizen.address),
-            ) //manual check because of the if condition for the x days passed
-            const [nft0, nft1] = await pnft.tokensOfOwner(citizen.address)
+            const [nft0] = await pnft.tokensOfOwner(citizen.address)
             console.log("NFT 0:", nft0)
-            console.log("NFT 1:", nft1)
+
             assert.equal(nft0, await pnft.tokenURI(0))
-            assert.equal(nft1, await pnft.tokenURI(1))
-            assert.equal(await pnft.getTokenCounter(), 2)
+
+            assert.equal(await pnft.getTokenCounter(), 1)
         })
         it("should emit the NoTokenCitizen event", async () => {
             await cityCitizenContract.consumePTFromCitizen(

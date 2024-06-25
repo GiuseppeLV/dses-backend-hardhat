@@ -80,6 +80,21 @@
       "address": "0xa791c4B01d2253c25e6DE3A78A05C6d9C04C5F82",
       "txHash": "0x54da888ad00adf6e5c9a53a8a9f1a12cb85ee690090803d47839ec184c52bf6e",
       "kind": "transparent"
+    },
+    {
+      "address": "0x0479e6B5f782216541851C2EdE7cE0Ac37A7cE61",
+      "txHash": "0x772f1ba71e380349264b742ee2c01ba258662abbdd17f87b8d6db29122ab9a8e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3dcCa3341e4b0C8bF562fD95e25173E6FD161DD1",
+      "txHash": "0x6576b0353e6752b020e063c855fa06aea02cb3be3bc7e205069c7f549b1541b1",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9ca56C9d98fE885dF5D6677A196f51d464F410fE",
+      "txHash": "0x0885ad0f0d7aa27081c53f665b6ec534e2bc149150c85b430cd75d6c0227022f",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -2262,6 +2277,314 @@
               {
                 "label": "id",
                 "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "7055248814ad50d39631200d9e55d5d6e9428d3f59480938d49bd2c6e56a4dfa": {
+      "address": "0xA032922C4db78622e60994dAbAaC79B4e7d52038",
+      "txHash": "0xcfadf3707bada9a0b7f5072323ab01823021394ac22acd569262935ebcb3846c",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "tokenName",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:16"
+          },
+          {
+            "label": "tokenSymbol",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_string_storage",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:17"
+          },
+          {
+            "label": "tokenDecimals",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint8",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:18"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:19"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_address",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:20"
+          },
+          {
+            "label": "contractAddresses",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:22"
+          },
+          {
+            "label": "balances",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:24"
+          },
+          {
+            "label": "allowance",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:25"
+          },
+          {
+            "label": "reversePartecipants",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:26"
+          },
+          {
+            "label": "ptInEthRate",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_uint256",
+            "contract": "PollutionToken",
+            "src": "contracts/PollutionToken.sol:37"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "5de023cb5abf89b3992f93bf3bdc366ee1d5e24e237b2c15f68009ddb1e20d43": {
+      "address": "0x5374CF41ceecA449196F36180e47949f1b7A0F5d",
+      "txHash": "0xb9832490cd8a061d7d9ac2701966fc69cd493acdd55fd23a226cc4269af1bc7f",
+      "layout": {
+        "solcVersion": "0.8.21",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "citizens",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_struct(Citizen)1057_storage)",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:22"
+          },
+          {
+            "label": "pt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(IPollutionToken)1847",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:24"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_address",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:25"
+          },
+          {
+            "label": "dsesCenter",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_contract(IDSESCenter)1766",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:26"
+          },
+          {
+            "label": "pnft",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IPollutionNft)1790",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:27"
+          },
+          {
+            "label": "locked",
+            "offset": 20,
+            "slot": "5",
+            "type": "t_bool",
+            "contract": "CityCitizen",
+            "src": "contracts/CityCitizen.sol:30"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IDSESCenter)1766": {
+            "label": "contract IDSESCenter",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionNft)1790": {
+            "label": "contract IPollutionNft",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPollutionToken)1847": {
+            "label": "contract IPollutionToken",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Citizen)1057_storage)": {
+            "label": "mapping(address => struct classes.Citizen)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Citizen)1057_storage": {
+            "label": "struct classes.Citizen",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "checkedTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "surname",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "email",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "dateOfBirth",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "telephone",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "physicalAddress",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "id",
+                "type": "t_string_storage",
                 "offset": 0,
                 "slot": "7"
               }

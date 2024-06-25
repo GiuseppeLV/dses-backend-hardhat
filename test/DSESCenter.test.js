@@ -100,6 +100,26 @@ describe("DSESCenter unit test", function () {
         })
     })
 
+    describe("modifyState", function () {
+        it("should modify the State", async () => {
+            dsesCenter = dsesCenter.connect(accounts[0])
+            await dsesCenter.addState(
+                "Irlanda",
+                "IRL",
+                state.address,
+                97000,
+                "Mario",
+                "Rossi",
+                "mario.r@gmail.com",
+                32856579098,
+                "Via Armando Diaz",
+                true,
+            )
+            state1 = await dsesCenter.getState(state.address)
+            assert.equal("Irlanda", state1[0])
+        })
+    })
+
     describe("deleteState", function () {
         it("should delete a state ", async () => {
             iso = "ITA"
@@ -144,6 +164,25 @@ describe("DSESCenter unit test", function () {
                 city.address,
             )
             assert.equal(checkDelete, true)
+        })
+    })
+    describe("modifyCity", function () {
+        it("should modify the City", async () => {
+            dsesCenter = dsesCenter.connect(state)
+            await dsesCenter.addCity(
+                "Torino",
+                886837,
+                12,
+                city.address,
+                "Mario",
+                "Rossi",
+                "mario.r@gmail.com",
+                32856579098,
+                "Via Armando Diaz",
+                true,
+            )
+            city1 = await dsesCenter.getCity(city.address)
+            assert.equal("Torino", city1[0])
         })
     })
 })

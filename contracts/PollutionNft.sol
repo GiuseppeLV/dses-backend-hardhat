@@ -143,13 +143,6 @@ contract PollutionNft is ERC721Enumerable {
         return "data:application/json;base64,";
     }
 
-    /**
-     * Returning token uri by tokenId.
-     *
-     * @param tokenId token id of the token that you want to visualize
-     *
-     */
-
     function tokenURI(
         uint256 tokenId
     ) public view virtual override returns (string memory) {

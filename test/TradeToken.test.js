@@ -41,10 +41,12 @@ describe("TradeToken unit test", function () {
             await td.startTrade(50, receiver)
             td = td.connect(receiver)
             const trades = await td.returnTrades(receiver)
-            const trades3 = await td.getTradeById(2)
-            console.log("TRADES3:", trades3)
-            await td.endTrade(trades[0][2], receiver, {
-                value: ethers.parseEther("168"),
+            console.log("TRADES:", trades)
+            const rate = await pt.getPTtoEthRate()
+            console.log("RAte:", rate)
+            const ethToSend = Number(rate) * Number(trades[0][2])
+            await td.endTrade(trades[0][3], receiver, true, {
+                value: ethToSend,
             })
             const trades2 = await td.returnTrades(receiver)
 
@@ -53,6 +55,22 @@ describe("TradeToken unit test", function () {
                 ethers.parseUnits("50", 18),
                 await pt.balanceOf(receiver.address),
             )
+            assert.equal(1, trades.length)
+        })
+        it("should end a trade declining it", async () => {
+            td = td.connect(sender)
+            await td.startTrade(50, receiver)
+            td = td.connect(receiver)
+            const trades = await td.returnTrades(receiver)
+            console.log("TRADES:", trades)
+            const rate = await pt.getPTtoEthRate()
+            console.log("RAte:", rate)
+            const ethToSend = Number(rate) * Number(trades[0][2])
+            await td.endTrade(trades[0][3], receiver, false, {
+                value: ethToSend,
+            })
+            const trades2 = await td.returnTrades(receiver)
+
             assert.equal(1, trades.length)
         })
     })

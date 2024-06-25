@@ -204,7 +204,6 @@ contract PollutionToken is Initializable {
             revert PollutionToken__Not_Enough_PT();
         }
         reversePartecipants[to] = from;
-        //userCount = userCount + 1;
         transferExtended(from, to, value);
     }
 
