@@ -2,13 +2,8 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-//import "@openzeppelin/contracts/access/Ownable.sol";
-// The new-version of "@openzeppelin/contracts": "^5.0.1", already has Base64.sol
-// You can import it like as shown just below...
-import "@openzeppelin/contracts/utils/Base64.sol"; // 👈 comment in this import
+import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-// instead of installing "base64-sol": "^1.1.0",
-//import "base64-sol/base64.sol"; // 👈 comment out this import
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
